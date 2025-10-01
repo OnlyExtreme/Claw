@@ -1,7 +1,6 @@
 #include "file_ops.hpp"
 #include "ui.hpp"
 #include "utils.hpp"
-#include <iostream>
 
 int main() {
 	FileSystem sys;
