@@ -1,5 +1,5 @@
 #include "ui.hpp"
-#include "utils.hpp"
+#include "../utils/utils.hpp"
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/screen.hpp>
 #include <ftxui/screen/string.hpp>
@@ -11,7 +11,7 @@ void run_ui(std::vector<FileEntry>& files) {
 	Elements entries;
 	for (auto& f : files) {
 		entries.push_back(
-			text(to_utf8(f.name)) | (f.is_dir ? color(Color::Blue) : color(Color::White))
+			text(f.name) | (f.is_dir ? color(Color::Blue) : color(Color::White))
 		);
 	}
 

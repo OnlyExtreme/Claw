@@ -13,9 +13,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(claw
 	src/main.cpp
-	src/file_ops.cpp
-	src/ui.cpp
-	src/utils.cpp
+	"src/core/file_ops.cpp"
+	"src/ui/ui.cpp"
+	"src/utils/utils.cpp"
 )
 
 target_link_libraries(claw PRIVATE

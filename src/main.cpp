@@ -1,6 +1,6 @@
-#include "file_ops.hpp"
-#include "ui.hpp"
-#include "utils.hpp"
+#include "core/file_ops.hpp"
+#include "ui/ui.hpp"
+#include "utils/utils.hpp"
 
 int main() {
 	FileSystem sys;
