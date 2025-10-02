@@ -16,7 +16,7 @@ add_executable(claw
 	"src/core/file_ops.cpp"
 	"src/ui/ui.cpp"
 	"src/utils/utils.cpp"
-)
+ "src/app/filepane.cpp")
 
 target_link_libraries(claw PRIVATE
 	ftxui::component

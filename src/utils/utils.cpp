@@ -9,3 +9,11 @@ std::string to_utf8(const std::wstring& w) {
 	WideCharToMultiByte(CP_UTF8, 0, w.c_str(), (int)w.size(), result.data(), size_needed, NULL, NULL);
 	return result;
 }
+
+std::wstring get_parent(const std::wstring& path) {
+	std::wstring parent;
+	size_t pos = path.find_last_of(L"\\");
+	if (pos == std::wstring::npos)
+		return path;
+	return path.substr(0, pos);
+}
