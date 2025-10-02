@@ -34,7 +34,7 @@ void FilePane::enter_selected() {
 	FileEntry selected_entry = fs_.list_directory(current_path_)[selected_index_];
 	if (!selected_entry.is_dir)
 		return;
-	std::wstring new_path = current_path_ + L"\\" + selected_entry.name;
+	std::wstring new_path = current_path_ + selected_entry.name + L"\\";
 	set_directory(new_path);
 	return;
 }
