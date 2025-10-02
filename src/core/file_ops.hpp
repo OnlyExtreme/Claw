@@ -5,7 +5,7 @@
 struct FileEntry {
 	std::wstring name;
 	bool is_dir;
-	uint64_t size;
+	int64_t size;
 };
 
 class FileSystem {

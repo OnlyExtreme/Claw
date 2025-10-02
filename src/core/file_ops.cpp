@@ -19,8 +19,12 @@ std::vector<FileEntry> FileSystem::list_directory(const std::wstring& path) {
 
 		if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 			result.push_back({ ffd.cFileName, true });
-		else
-			result.push_back({ ffd.cFileName, false });
+		else {
+			LARGE_INTEGER filesize;
+			filesize.LowPart = ffd.nFileSizeLow;
+			filesize.HighPart = ffd.nFileSizeHigh;
+			result.push_back({ ffd.cFileName, false, filesize.QuadPart });
+		}
 	} while (FindNextFileW(hFind, &ffd) != 0);
 
 	FindClose(hFind);

@@ -10,8 +10,11 @@ using namespace ftxui;
 void run_ui(std::vector<FileEntry>& files) {
 	Elements entries;
 	for (auto& f : files) {
+		std::wstring name = f.name;
+		if (!f.is_dir)
+			name += L"     " + (std::to_wstring(f.size)) + L" bytes";
 		entries.push_back(
-			text(f.name) | (f.is_dir ? color(Color::Blue) : color(Color::White))
+			text(name) | (f.is_dir ? color(Color::Blue) : color(Color::White))
 		);
 	}
 
