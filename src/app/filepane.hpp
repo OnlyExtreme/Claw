@@ -4,6 +4,7 @@ See LICENSE for details.
 */
 
 #include "../core/file_ops.hpp"
+#include <ftxui/dom/elements.hpp>
 
 /*
 FilePane class, the data structure for a single tab of the file manager.
@@ -23,6 +24,8 @@ public:
 
 	int selected_index() const;
 	const std::vector<FileEntry>& entries() const;
+
+	ftxui::Element Render();
 
 private:
 	std::wstring current_path_;
