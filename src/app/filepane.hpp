@@ -15,7 +15,7 @@ class FilePane {
 public:
 	FilePane(const std::wstring& start_path);
 
-	void set_directory(const std::wstring& path);
+	void set_directory(const std::wstring& path, int index);
 	const std::wstring& current_directory() const;
 
 	void next_file();
