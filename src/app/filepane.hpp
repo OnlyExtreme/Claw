@@ -1,5 +1,14 @@
+/*
+Copyright (c) 2025 Sparx.
+See LICENSE for details.
+*/
+
 #include "../core/file_ops.hpp"
 
+/*
+FilePane class, the data structure for a single tab of the file manager.
+Consists of a FileSystem and the status.
+*/
 class FilePane {
 public:
 	FilePane(const std::wstring& start_path);

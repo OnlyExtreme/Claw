@@ -1,3 +1,8 @@
+/*
+Copyright (c) 2025 Sparx.
+See LICENSE for details.
+*/
+
 #include "core/file_ops.hpp"
 #include "ui/ui.hpp"
 #include "utils/utils.hpp"

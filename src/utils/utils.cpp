@@ -1,3 +1,8 @@
+/*
+Copyright (c) 2025 Sparx.
+See LICENSE for details.
+*/
+
 #include "utils.hpp"
 
 std::string to_utf8(const std::wstring& w) {
@@ -12,7 +17,7 @@ std::string to_utf8(const std::wstring& w) {
 
 std::wstring get_parent(const std::wstring& path) {
 	std::wstring parent;
-	size_t pos = (path.substr(0, path.length() - 1).find_last_of(L"\\");
+	size_t pos = (path.substr(0, path.length() - 1).find_last_of(L"\\"));
 	if (pos == std::wstring::npos)
 		return path;
 	return path.substr(0, pos);

@@ -1,3 +1,8 @@
+/*
+Copyright (c) 2025 Sparx.
+See LICENSE for details.
+*/
+
 #include "ui.hpp"
 #include "../utils/utils.hpp"
 #include <ftxui/dom/elements.hpp>

@@ -1,3 +1,8 @@
+/*
+Copyright (c) 2025 Sparx.
+See LICENSE for details.
+*/
+
 #include "file_ops.hpp"
 #include <Windows.h>
 
