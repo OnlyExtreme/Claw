@@ -20,5 +20,5 @@ std::wstring get_parent(const std::wstring& path) {
 	size_t pos = (path.substr(0, path.length() - 1).find_last_of(L"\\"));
 	if (pos == std::wstring::npos)
 		return path;
-	return path.substr(0, pos);
+	return path.substr(0, pos+1);
 }
