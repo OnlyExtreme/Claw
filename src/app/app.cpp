@@ -14,15 +14,19 @@ ftxui::Element App::Render() {
 	auto left = left_pane_.Render();
 	auto right = right_pane_.Render();
 
-	if (left_active_)
+	if (left_active_) {
 		left = ftxui::border(left) | ftxui::color(ftxui::Color::Green);
-	else
+		right = ftxui::border(right) | ftxui::color(ftxui::Color::White);
+	}
+	else {
+		left = ftxui::border(left) | ftxui::color(ftxui::Color::White);
 		right = ftxui::border(right) | ftxui::color(ftxui::Color::Green);
+	}
 
 	return ftxui::hbox({
-		left | ftxui::flex,
-		right | ftxui::flex,
-		});
+		left | ftxui::size(ftxui::WIDTH, ftxui::EQUAL, ftxui::Terminal::Size().dimx / 2),
+		right | ftxui::size(ftxui::WIDTH, ftxui::EQUAL, ftxui::Terminal::Size().dimx / 2),
+	});
 }
 
 void App::HandleInput(char key) {
@@ -32,7 +36,7 @@ void App::HandleInput(char key) {
 	FilePane& active = left_active_ ? left_pane_ : right_pane_;
 	if (key == 'j') active.next_file();
 	if (key == 'k') active.previous_file();
-	if (key == 'h')	active.enter_selected();
-	if (key == 'l') active.enter_parent();
+	if (key == 'l')	active.enter_selected();
+	if (key == 'h') active.enter_parent();
 }
 

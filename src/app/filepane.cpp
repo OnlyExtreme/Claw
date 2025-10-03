@@ -67,3 +67,7 @@ ftxui::Element FilePane::Render() {
 	}
 	return vbox(items);
 }
+
+const std::vector<FileEntry>& FilePane::entries() const {
+	return entries_;
+}
