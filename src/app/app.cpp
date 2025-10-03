@@ -23,6 +23,16 @@ ftxui::Element App::Render() {
 		right = ftxui::border(right) | ftxui::color(ftxui::Color::Green);
 	}
 
+	left = ftxui::vbox({
+		ftxui::text(left_pane_.current_directory()),
+		left,
+	});
+
+	right = ftxui::vbox({
+		ftxui::text(right_pane_.current_directory()),
+		right,
+	});
+
 	return ftxui::hbox({
 		left | ftxui::size(ftxui::WIDTH, ftxui::EQUAL, ftxui::Terminal::Size().dimx / 2),
 		right | ftxui::size(ftxui::WIDTH, ftxui::EQUAL, ftxui::Terminal::Size().dimx / 2),
