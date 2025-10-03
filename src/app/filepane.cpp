@@ -6,10 +6,7 @@ See LICENSE for details.
 #include "filepane.hpp"
 #include "../core/file_ops.hpp"
 #include "../utils/utils.hpp"
-#include <ftxui/dom/elements.hpp>
-#include <ftxui/screen/screen.hpp>
-#include <ftxui/screen/string.hpp>
-#include <ftxui/screen/color.hpp>
+#include "../ui/ui.hpp"
 
 FilePane::FilePane(const std::wstring& start_path) {
 	current_path_ = start_path;
@@ -59,13 +56,7 @@ int FilePane::selected_index() const {
 }
 
 ftxui::Element FilePane::Render() {
-	std::vector<ftxui::Element> items;
-	for (size_t i = 0; i < entries_.size(); i++) {
-		auto style = (i == selected_index_) ? ftxui::inverted : ftxui::nothing;
-		auto color = entries_[i].is_dir ? ftxui::color(ftxui::Color::Blue) : ftxui::color(ftxui::Color::White);
-		items.push_back(ftxui::text(entries_[i].name) | style | color);
-	}
-	return vbox(items);
+	return render_filepane(*this);
 }
 
 const std::vector<FileEntry>& FilePane::entries() const {

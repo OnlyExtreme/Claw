@@ -17,6 +17,10 @@ public:
 	ftxui::Element Render();
 	void HandleInput(char key);
 
+	FilePane left_pane() const;
+	FilePane right_pane() const;
+	bool left_active() const;
+
 private:
 	FilePane left_pane_;
 	FilePane right_pane_;
