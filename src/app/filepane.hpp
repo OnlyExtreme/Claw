@@ -15,7 +15,7 @@ class FilePane {
 public:
 	FilePane(const std::wstring& start_path);
 
-	void set_directory(const std::wstring& path, int index);
+	void set_directory(const std::wstring& path, int index, int offset);
 	const std::wstring& current_directory() const;
 
 	void next_file();
@@ -24,6 +24,7 @@ public:
 	void enter_parent();
 
 	int selected_index() const;
+	int list_offset() const;
 	const std::vector<FileEntry>& entries() const;
 
 	ftxui::Element Render();
@@ -32,6 +33,7 @@ private:
 	std::wstring current_path_;
 	std::vector<FileEntry> entries_;
 	int selected_index_;
+	int list_offset_;
 
 	FileSystem fs_;
 };

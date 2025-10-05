@@ -8,21 +8,26 @@ See LICENSE for details.
 #include "../utils/utils.hpp"
 #include "../ui/ui.hpp"
 #include <algorithm>
-#include <iostream>
+#include <ftxui/dom/elements.hpp>
 
 FilePane::FilePane(const std::wstring& start_path) {
 	current_path_ = start_path;
 	entries_ = this->fs_.list_directory(current_path_);
 	selected_index_ = 0;
+	list_offset_ = 0;
 }
 
-void FilePane::set_directory(const std::wstring& path, int index) {
+void FilePane::set_directory(const std::wstring& path, int index, int offset) {
 	current_path_ = path;
 	entries_ = fs_.list_directory(current_path_);
 	if (index >= 0 && index < entries_.size())
 		selected_index_ = index;
 	else
 		selected_index_ = 0;
+	if (offset >= 0 && offset < entries_.size())
+		list_offset_ = offset;
+	else
+		list_offset_ = 0;
 }
 
 const std::wstring& FilePane::current_directory() const {
@@ -32,12 +37,16 @@ const std::wstring& FilePane::current_directory() const {
 void FilePane::next_file() {
 	if (selected_index_ < fs_.list_directory(current_path_).size() - 1)
 		selected_index_ += 1;
+	if (selected_index_ > list_offset_ + ftxui::Terminal::Size().dimy - 4)
+		list_offset_ += 1;
 	return;
 }
 
 void FilePane::previous_file() {
 	if (selected_index_ > 0)
 		selected_index_ -= 1;
+	if (selected_index_ < list_offset_)
+		list_offset_ -= 1;
 	return;
 }
 
@@ -46,7 +55,7 @@ void FilePane::enter_selected() {
 	if (!selected_entry.is_dir)
 		return;
 	std::wstring new_path = current_path_ + selected_entry.name + L"\\";
-	set_directory(new_path, 0);
+	set_directory(new_path, 0, 0);
 	return;
 }
 
@@ -54,12 +63,22 @@ void FilePane::enter_parent() {
 	std::wstring parent = get_parent(current_path_);
 	std::wstring file_name = current_path_.substr(current_path_.rfind(parent)+parent.size(), current_path_.size() - parent.size() - 1);
 	auto entries = fs_.list_directory(parent);
-	set_directory(parent, get_index(entries, file_name));
+	int index = get_index(entries, file_name);
+	int offset = 0;
+	if (index > ftxui::Terminal::Size().dimy / 2 - 2)
+		offset = index - ftxui::Terminal::Size().dimy / 2 + 2;
+	if (index > entries_.size() - ftxui::Terminal::Size().dimy / 2 + 2)
+		offset = entries_.size() - ftxui::Terminal::Size().dimy + 4;
+	set_directory(parent, index, offset);
 	return;
 }
 
 int FilePane::selected_index() const {
 	return selected_index_;
+}
+
+int FilePane::list_offset() const {
+	return list_offset_;
 }
 
 ftxui::Element FilePane::Render() {
