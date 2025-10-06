@@ -35,3 +35,17 @@ std::vector<FileEntry> FileSystem::list_directory(const std::wstring& path) {
 	FindClose(hFind);
 	return result;
 }
+
+void FileSystem::open_file(const std::wstring& path) {
+	HINSTANCE result = ShellExecuteW(
+		nullptr,
+		L"open",
+		path.c_str(),
+		nullptr,
+		nullptr,
+		SW_SHOWNORMAL
+	);
+
+	if ((INT_PTR)result <= 32)
+		return;
+}

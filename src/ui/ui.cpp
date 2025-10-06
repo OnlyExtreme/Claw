@@ -22,7 +22,7 @@ Element render_filepane(const FilePane& pane) {
 		if (i < pane.list_offset())
 			continue;
 		auto style = (i == pane.selected_index()) ? inverted : nothing;
-		auto item_color = pane.entries()[i].is_dir ? color(Color::Blue) : color(Color::White);
+		auto item_color = pane.entries()[i].is_dir ? color(Color::BlueLight) : color(Color::White);
 		items.push_back(text(pane.entries()[i].name) | style | item_color);
 		sizes.push_back((pane.entries()[i].is_dir ? text(L"<DIR>") : text(get_size(pane.entries()[i].size))) | style | item_color);
 	}
