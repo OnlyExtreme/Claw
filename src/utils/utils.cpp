@@ -6,6 +6,9 @@ See LICENSE for details.
 #include "utils.hpp"
 #include "../core/file_ops.hpp"
 #include <vector>
+#include <cmath>
+#include <cstdio>
+#include <cwchar>
 
 std::string to_utf8(const std::wstring& w) {
 	if (w.empty())
@@ -30,4 +33,18 @@ int get_index(std::vector<FileEntry>& files, const std::wstring& name) {
 		if (files[i].name == name)
 			return i;
 	return 0;
+}
+
+std::wstring get_size(int64_t size) {
+	double proper_size = (double)size;
+	int unit = 0;
+	std::wstring units[] = { L" b", L" Kb", L" Mb", L" Gb", L" Tb" };
+	while (proper_size > 1024.0 && unit < 4) {
+		proper_size /= 1024.0;
+		unit++;
+	}
+	wchar_t buffer[50];
+	swprintf(buffer, sizeof(buffer), L"%.2lf", proper_size);
+	std::wstring res = buffer + units[unit];
+	return res;
 }

@@ -17,3 +17,6 @@ std::wstring get_parent(const std::wstring& path);
 
 // get the index of given file name
 int get_index(std::vector<FileEntry>& files, const std::wstring& name);
+
+// get the string with proper unit for a file
+std::wstring get_size(int64_t size);

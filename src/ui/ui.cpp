@@ -11,19 +11,25 @@ See LICENSE for details.
 #include <ftxui/screen/screen.hpp>
 #include <ftxui/screen/string.hpp>
 #include <ftxui/screen/color.hpp>
+#include <string>
 
 using namespace ftxui;
 
 Element render_filepane(const FilePane& pane) {
 	std::vector<Element> items;
+	std::vector<Element> sizes;
 	for (size_t i = 0; i < pane.entries().size(); i++) {
 		if (i < pane.list_offset())
 			continue;
 		auto style = (i == pane.selected_index()) ? inverted : nothing;
 		auto item_color = pane.entries()[i].is_dir ? color(Color::Blue) : color(Color::White);
 		items.push_back(text(pane.entries()[i].name) | style | item_color);
+		sizes.push_back((pane.entries()[i].is_dir ? text(L"<DIR>") : text(get_size(pane.entries()[i].size))) | style | item_color);
 	}
-	return vbox(items);
+	return hbox({
+		vbox(items) | size(WIDTH, EQUAL, Terminal::Size().dimx / 2 * 3 / 4),
+		vbox(sizes) | size(WIDTH, EQUAL, Terminal::Size().dimx / 2 / 4)
+	});
 }
 
 Element render_app(const App& app) {
