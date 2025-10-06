@@ -50,6 +50,22 @@ void FilePane::previous_file() {
 	return;
 }
 
+void FilePane::down_half_screen() {
+	int half_screen = ftxui::Terminal::Size().dimy / 2 - 2;
+	selected_index_ = min(entries_.size() - 1, selected_index_ + half_screen);
+	if (selected_index_ > list_offset_ + ftxui::Terminal::Size().dimy - 4)
+		list_offset_ = selected_index_ - ftxui::Terminal::Size().dimy + 4;
+	return;
+}
+
+void FilePane::up_half_screen() {
+	int half_screen = ftxui::Terminal::Size().dimy / 2 - 2;
+	selected_index_ = max(0, selected_index_ - half_screen);
+	if (selected_index_ < list_offset_)
+		list_offset_ = selected_index_;
+	return;
+}
+
 void FilePane::enter_selected() {
 	FileEntry selected_entry = fs_.list_directory(current_path_)[selected_index_];
 	if (!selected_entry.is_dir) {

@@ -19,6 +19,8 @@ void App::HandleInput(char key) {
 	FilePane& active = left_active_ ? left_pane_ : right_pane_;
 	if (key == 'j') active.next_file();
 	if (key == 'k') active.previous_file();
+	if (key == 'd') active.down_half_screen();
+	if (key == 'u') active.up_half_screen();
 	if (key == 'l')	active.enter_selected();
 	if (key == 'h') active.enter_parent();
 }

@@ -20,6 +20,8 @@ public:
 
 	void next_file();
 	void previous_file();
+	void down_half_screen();
+	void up_half_screen();
 	void enter_selected();
 	void enter_parent();
 
