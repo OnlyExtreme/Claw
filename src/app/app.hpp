@@ -7,10 +7,13 @@ See LICENSE for details.
 #include "filepane.hpp"
 #include <string>
 
+/*
+* The enum for global states of the application.
+*/
 enum STATUS { StateNormal, StateSearch, StateCommand };
 
 /*
-Handles the whole application, including global status and inputs.
+* Handles the whole application, including global status and inputs.
 */
 class App {
 public:

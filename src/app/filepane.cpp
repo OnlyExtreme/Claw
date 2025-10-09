@@ -17,6 +17,7 @@ FilePane::FilePane(const std::wstring& start_path) {
 	list_offset_ = 0;
 }
 
+// Set the new directory and initialize index and offset.
 void FilePane::set_directory(const std::wstring& path, int index, int offset) {
 	current_path_ = path;
 	entries_ = fs_.list_directory(current_path_);
@@ -34,6 +35,7 @@ const std::wstring& FilePane::current_directory() const {
 	return current_path_;
 }
 
+// Calculates offset after a jump or change of directory.
 int FilePane::reset_offset(int index) {
 	if (entries_.size() <= ftxui::Terminal::Size().dimy - 4)
 		return 0;
@@ -45,6 +47,7 @@ int FilePane::reset_offset(int index) {
 	return offset;
 }
 
+// Select the next file, considering index and offset.
 void FilePane::next_file() {
 	if (selected_index_ < fs_.list_directory(current_path_).size() - 1)
 		selected_index_ += 1;
@@ -53,6 +56,7 @@ void FilePane::next_file() {
 	return;
 }
 
+// Select the previous file, considering index and offset.
 void FilePane::previous_file() {
 	if (selected_index_ > 0)
 		selected_index_ -= 1;
@@ -61,6 +65,7 @@ void FilePane::previous_file() {
 	return;
 }
 
+// Scroll down half screen, considering index and offset.
 void FilePane::down_half_screen() {
 	int half_screen = ftxui::Terminal::Size().dimy / 2 - 2;
 	selected_index_ = min(entries_.size() - 1, selected_index_ + half_screen);
@@ -69,6 +74,7 @@ void FilePane::down_half_screen() {
 	return;
 }
 
+// Scroll up half screen, considering index and offset.
 void FilePane::up_half_screen() {
 	int half_screen = ftxui::Terminal::Size().dimy / 2 - 2;
 	selected_index_ = max(0, selected_index_ - half_screen);
@@ -77,6 +83,7 @@ void FilePane::up_half_screen() {
 	return;
 }
 
+// Enter the selected entry if it is a directory, open the file with default app otherwise.
 void FilePane::enter_selected() {
 	FileEntry selected_entry = fs_.list_directory(current_path_)[selected_index_];
 	if (!selected_entry.is_dir) {
@@ -88,6 +95,7 @@ void FilePane::enter_selected() {
 	return;
 }
 
+// Enter the parent directory and reset the index and offset.
 void FilePane::enter_parent() {
 	std::wstring parent = get_parent(current_path_);
 	std::wstring file_name = current_path_.substr(current_path_.rfind(parent)+parent.size(), current_path_.size() - parent.size() - 1);
@@ -98,6 +106,7 @@ void FilePane::enter_parent() {
 	return;
 }
 
+// For "f+<ch>" search, locate the first file starting with character <ch>. Case insensitive.
 void FilePane::locate_with_character(wchar_t ch) {
 	for (size_t i = 0; i < entries_.size(); i++) {
 		if (towlower(entries_[i].name[0]) == towlower(ch)) {

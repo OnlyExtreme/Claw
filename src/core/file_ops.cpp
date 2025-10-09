@@ -6,6 +6,7 @@ See LICENSE for details.
 #include "file_ops.hpp"
 #include <Windows.h>
 
+// Lists all the entries in a given directory, including directories and files.
 std::vector<FileEntry> FileSystem::list_directory(const std::wstring& path) {
 	std::vector<FileEntry> result;
 
@@ -36,6 +37,7 @@ std::vector<FileEntry> FileSystem::list_directory(const std::wstring& path) {
 	return result;
 }
 
+// Opens a file with default application.
 void FileSystem::open_file(const std::wstring& path) {
 	HINSTANCE result = ShellExecuteW(
 		nullptr,

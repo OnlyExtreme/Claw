@@ -15,6 +15,7 @@ See LICENSE for details.
 
 using namespace ftxui;
 
+// Renders a filepane. Including the entries with types indicated by colors, and size.
 Element render_filepane(const FilePane& pane) {
 	std::vector<Element> items;
 	std::vector<Element> sizes;
@@ -32,6 +33,7 @@ Element render_filepane(const FilePane& pane) {
 	});
 }
 
+// Renders the complete application. Titles and two FilePanes.
 Element render_app(const App& app) {
 	auto left = app.left_pane().Render();
 	auto right = app.right_pane().Render();

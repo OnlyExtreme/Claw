@@ -8,8 +8,8 @@ See LICENSE for details.
 #include <ftxui/dom/elements.hpp>
 
 /*
-FilePane class, the data structure for a single tab of the file manager.
-Consists of a FileSystem and the status.
+* FilePane class, the data structure for a single tab of the file manager.
+* Consists of a FileSystem and the status.
 */
 class FilePane {
 public:

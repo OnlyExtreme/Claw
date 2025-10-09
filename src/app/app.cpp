@@ -4,15 +4,26 @@
 #include <string>
 
 
+/*
+* Constructor of Class App.
+* Currently forcing initial paths to C:\ and D:\, might change later.
+*/
 App::App() : left_pane_(L"C:\\"), right_pane_(L"D:\\") {
 	left_active_ = true;
 	status_ = STATUS::StateNormal;
 }
 
+/*
+* Invoke the render function for the whole application implemented in ui.cpp
+*/
 ftxui::Element App::Render() {
 	return render_app(*this);
 }
 
+/*
+* Handle (character?) inputs.
+* Consider including special inputs and events.
+*/
 void App::HandleInput(char key) {
 	if (status_ == STATUS::StateSearch) {
 		FilePane& active = left_active_ ? left_pane_ : right_pane_;
@@ -55,6 +66,9 @@ STATUS App::status() const {
 	return status_;
 }
 
+/*
+* Deals with mode changing issues.
+*/
 void App::enter_mode(STATUS target_status) {
 	if (status_ == target_status)
 		return;

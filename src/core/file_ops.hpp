@@ -7,18 +7,14 @@ See LICENSE for details.
 #include <string>
 #include <vector>
 
-/*
-FileEntry for storing the information of a single file entry.
-*/
+// FileEntry for storing the information of a single file entry.
 struct FileEntry {
 	std::wstring name;
 	bool is_dir;
 	int64_t size;
 };
 
-/*
-FileSystem for functions directly related to file operations, implemented with Win32 API.
-*/
+// FileSystem for functions directly related to file operations, implemented with Win32 API.
 class FileSystem {
 public:
 	std::vector<FileEntry> list_directory(const std::wstring& path);
