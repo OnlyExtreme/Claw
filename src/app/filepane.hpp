@@ -18,12 +18,15 @@ public:
 	void set_directory(const std::wstring& path, int index, int offset);
 	const std::wstring& current_directory() const;
 
+	int reset_offset(int index);
+
 	void next_file();
 	void previous_file();
 	void down_half_screen();
 	void up_half_screen();
 	void enter_selected();
 	void enter_parent();
+	void locate_with_character(wchar_t ch);
 
 	int selected_index() const;
 	int list_offset() const;

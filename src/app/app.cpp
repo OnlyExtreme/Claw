@@ -6,6 +6,7 @@
 
 App::App() : left_pane_(L"C:\\"), right_pane_(L"D:\\") {
 	left_active_ = true;
+	status_ = STATUS::StateNormal;
 }
 
 ftxui::Element App::Render() {
@@ -13,16 +14,29 @@ ftxui::Element App::Render() {
 }
 
 void App::HandleInput(char key) {
-	if (key == 'H') left_active_ = true;
-	if (key == 'L') left_active_ = false;
-	
-	FilePane& active = left_active_ ? left_pane_ : right_pane_;
-	if (key == 'j') active.next_file();
-	if (key == 'k') active.previous_file();
-	if (key == 'd') active.down_half_screen();
-	if (key == 'u') active.up_half_screen();
-	if (key == 'l')	active.enter_selected();
-	if (key == 'h') active.enter_parent();
+	if (status_ == STATUS::StateSearch) {
+		FilePane& active = left_active_ ? left_pane_ : right_pane_;
+		active.locate_with_character(key);
+		status_ = STATUS::StateNormal;
+		return;
+	}
+
+
+	if (status_ == STATUS::StateNormal) {
+		
+		if (key == 'f') enter_mode(STATUS::StateSearch);
+
+		if (key == 'H') left_active_ = true;
+		if (key == 'L') left_active_ = false;
+
+		FilePane& active = left_active_ ? left_pane_ : right_pane_;
+		if (key == 'j') active.next_file();
+		if (key == 'k') active.previous_file();
+		if (key == 'd') active.down_half_screen();
+		if (key == 'u') active.up_half_screen();
+		if (key == 'l')	active.enter_selected();
+		if (key == 'h') active.enter_parent();
+	}
 }
 
 FilePane App::left_pane() const {
@@ -35,4 +49,15 @@ FilePane App::right_pane() const {
 
 bool App::left_active() const {
 	return left_active_;
+}
+
+STATUS App::status() const {
+	return status_;
+}
+
+void App::enter_mode(STATUS target_status) {
+	if (status_ == target_status)
+		return;
+	status_ = target_status;
+	return;
 }

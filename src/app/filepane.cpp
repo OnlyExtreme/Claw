@@ -34,6 +34,17 @@ const std::wstring& FilePane::current_directory() const {
 	return current_path_;
 }
 
+int FilePane::reset_offset(int index) {
+	if (entries_.size() <= ftxui::Terminal::Size().dimy - 4)
+		return 0;
+	int offset = 0;
+	if (index > ftxui::Terminal::Size().dimy / 2 - 2)
+		offset = index - ftxui::Terminal::Size().dimy / 2 + 2;
+	if (index > entries_.size() - ftxui::Terminal::Size().dimy / 2 + 2)
+		offset = entries_.size() - ftxui::Terminal::Size().dimy + 4;
+	return offset;
+}
+
 void FilePane::next_file() {
 	if (selected_index_ < fs_.list_directory(current_path_).size() - 1)
 		selected_index_ += 1;
@@ -82,12 +93,19 @@ void FilePane::enter_parent() {
 	std::wstring file_name = current_path_.substr(current_path_.rfind(parent)+parent.size(), current_path_.size() - parent.size() - 1);
 	auto entries = fs_.list_directory(parent);
 	int index = get_index(entries, file_name);
-	int offset = 0;
-	if (index > ftxui::Terminal::Size().dimy / 2 - 2)
-		offset = index - ftxui::Terminal::Size().dimy / 2 + 2;
-	if (index > entries_.size() - ftxui::Terminal::Size().dimy / 2 + 2)
-		offset = entries_.size() - ftxui::Terminal::Size().dimy + 4;
+	int offset = reset_offset(index);
 	set_directory(parent, index, offset);
+	return;
+}
+
+void FilePane::locate_with_character(wchar_t ch) {
+	for (size_t i = 0; i < entries_.size(); i++) {
+		if (towlower(entries_[i].name[0]) == towlower(ch)) {
+			selected_index_ = i;
+			list_offset_ = reset_offset(i);
+			return;
+		}
+	}
 	return;
 }
 

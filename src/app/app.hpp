@@ -7,6 +7,8 @@ See LICENSE for details.
 #include "filepane.hpp"
 #include <string>
 
+enum STATUS { StateNormal, StateSearch, StateCommand };
+
 /*
 Handles the whole application, including global status and inputs.
 */
@@ -20,9 +22,13 @@ public:
 	FilePane left_pane() const;
 	FilePane right_pane() const;
 	bool left_active() const;
+	STATUS status() const;
+
+	void enter_mode(STATUS target_status);
 
 private:
 	FilePane left_pane_;
 	FilePane right_pane_;
 	bool left_active_ = true;
+	STATUS status_ = STATUS::StateNormal;
 };
